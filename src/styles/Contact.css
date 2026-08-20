@@ -1,0 +1,311 @@
+/* Full width contact page with semi-translucent dark background */
+.contact-page {
+  width: 100%;
+  padding: 50px 20px 80px 20px;
+  background: transparent; /* Galaxy space background visible */
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+/* Main container for two columns */
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Left Side: Contact Info */
+.contact-info-container {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-heading {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: var(--main-color);
+}
+
+.contact-icon {
+  font-size: 6rem;
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.contact-details {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.contact-detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.copy-email-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #a0a0a0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.copy-email-btn:hover {
+  background: var(--main-color);
+  color: #000;
+  border-color: var(--main-color);
+  transform: scale(1.1);
+}
+
+.copied-icon {
+  color: #2ecc71;
+}
+
+.contact-detail-icon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  color: var(--main-color);
+}
+
+.contact-detail-text a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.contact-detail-text a:hover {
+  text-decoration: underline;
+}
+
+.contact-message {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+/* Follow Me Section */
+.follow-me-containers {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.follow-texts {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.contact-social-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.contact-social-link {
+  text-decoration: none;
+}
+
+.contact-social-icon {
+  font-size: 1.5rem;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.contact-social-link:hover .contact-social-icon {
+  color: var(--main-color);
+}
+
+/* Right Side: Contact Form */
+.contact-form-container {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: var(--main-color);
+}
+
+/* Floating label container */
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Input and textarea styles */
+.contact-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #111;
+  color: #fff;
+}
+
+/* On focus, update border color */
+.contact-input:focus {
+  outline: none;
+  border-color: var(--main-color);
+}
+
+/* Error states */
+.input-container.has-error .contact-input,
+.contact-input.input-error {
+  border-color: #ff4d4f !important;
+  box-shadow: 0 0 10px rgba(255, 77, 79, 0.35);
+}
+
+.input-container.has-error .floating-label {
+  color: #ff7875 !important;
+}
+
+.input-error-msg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff4d4f;
+  font-size: 0.84rem;
+  margin-top: 6px;
+  text-align: left;
+  line-height: 1.4;
+  animation: errorSlideDown 0.25s ease-out;
+}
+
+.input-error-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  color: #ff4d4f;
+}
+
+@keyframes errorSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating label (initially centered over the input) */
+/* Updated to add a background color and z-index to hide the input border line behind it */
+.floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #000;
+  padding: 0 4px;
+  color: #777;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+/* When input is focused or not empty, float the label up */
+.contact-input:focus + .floating-label,
+.contact-input:not(:placeholder-shown) + .floating-label {
+  top: 0px;
+  font-size: 0.8rem;
+  color: var(--main-color);
+}
+
+/* Form layout */
+.contact-form {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Submit button using main color */
+.contact-submit {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.contact-submit:hover {
+  filter: brightness(0.9);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-info-container,
+  .contact-form-container {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+  .contact-info-container {
+    margin-bottom: 20px;
+  }
+}
+
+.contact-submit {
+  position: relative;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.contact-submit[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Simple spinner styles */
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

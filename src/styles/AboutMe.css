@@ -1,0 +1,294 @@
+/* Container: Transparent for Galaxy Space Background */
+.about-me-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 70px 40px;
+  width: 100%;
+  margin: 0 auto;
+  background: transparent;
+  color: #fff;      /* default white text */
+  overflow-x: hidden; /* Prevent horizontal scrollbars during animation */
+  position: relative;
+  z-index: 2;
+}
+
+/* 3D WebGL Background Layer switched from Hero Section */
+.about-3d-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Left side: text */
+.about-me-left {
+  flex: 1;
+  padding-right: 40px; /* spacing between text & photo */
+  position: relative;
+  z-index: 1;
+}
+
+/* Right side: photo container */
+.about-me-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center the tilt container */
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Scroll Animation Styles with 3D Perspective Tilt --- */
+
+/* Initial state for elements to be animated */
+.animate-on-scroll {
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+/* Specific initial transforms with perspective tilt */
+.about-me-left.animate-on-scroll {
+  transform: perspective(1000px) translateX(-45px) rotateY(-6deg) scale(0.97);
+}
+
+.about-me-right.animate-on-scroll {
+  transform: perspective(1000px) translateX(45px) rotateY(6deg) scale(0.97);
+}
+
+/* Visible state triggered by Intersection Observer */
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: perspective(1000px) translateX(0) rotateY(0deg) scale(1);
+}
+
+
+/* --- Existing Text Styles --- */
+
+/* Large "I'M BHARATH" title */
+.iam-bharath {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Neon glow for BHARATH */
+.neon-text {
+  font-size: 1em; /* same scale as parent (36px) */
+  color: #fff;    /* base color before glow */
+  text-shadow:
+    0 0 5px #ff005e,
+    0 0 10px #ff005e,
+    0 0 20px #ff005e,
+    0 0 40px #ff005e,
+    0 0 80px #ff005e;
+  animation: glow 1.5s infinite alternate;
+}
+
+/* Pink→cyan glow animation */
+@keyframes glow {
+  0% {
+    text-shadow:
+      0 0 5px #ff005e,
+      0 0 10px #ff005e,
+      0 0 20px #ff005e,
+      0 0 40px #ff005e,
+      0 0 80px #ff005e;
+  }
+  100% {
+    text-shadow:
+      0 0 10px #00d4ff,
+      0 0 20px #00d4ff,
+      0 0 40px #00d4ff,
+      0 0 80px #00d4ff,
+      0 0 160px #00d4ff;
+  }
+}
+
+/* "About Me" subheading in var(--main-color) */
+.subheading {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: var(--main-color); /* Make sure --main-color is defined globally or replace it */
+}
+
+/* Paragraph */
+.about-me-left p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  color: #ccc;
+}
+
+/* Key Stats Grid */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--main-color);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--main-color);
+  margin-bottom: 2px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #a0a0a0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tech Chips */
+.about-tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.tech-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tech-chip:hover {
+  background: var(--main-color);
+  color: #000;
+  border-color: var(--main-color);
+  transform: scale(1.05);
+}
+
+/* Contact button */
+.contact-button {
+  border: none;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: filter 0.3s ease, transform 0.3s ease; /* Added transform transition */
+  /* background-color is set inline via style prop */
+}
+
+.contact-button:hover {
+  filter: brightness(0.9);
+  transform: scale(1.05); /* Add subtle hover scale */
+}
+
+
+/* --- TiltEffect Styles (Ensure they don't conflict) --- */
+
+.tilt-container {
+  /* Ensure tilt container takes space */
+  display: inline-block;
+  /* Keep existing transition from JS or move here */
+   transition: transform 400ms cubic-bezier(0.03, 0.98, 0.52, 0.99);
+}
+
+
+
+/* --- Image Styles --- */
+
+/* Remove shine effect if TiltEffect provides enough visual interest */
+/* .hover14 figure { ... } */
+/* .hover14 figure::before { ... } */
+/* .hover14 figure:hover::before { ... } */
+/* @keyframes shine { ... } */
+
+/* Diamond-shaped image */
+.about-me-photo {
+  display: block; /* Prevent extra space below image */
+  width: 100%; /* Take width of parent (controlled by .about-me-right sizing) */
+  max-width: 400px; /* Max size */
+  object-fit: cover;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  /* Keep transform transition if needed separate from tilt */
+  transition: transform 0.3s ease;
+}
+
+/* Slight enlarge on hover (maybe remove if tilt effect is enough) */
+/* .about-me-right:hover .about-me-photo { */
+/*   transform: scale(1.05); */
+/* } */
+
+
+/* --- Mobile responsiveness --- */
+@media (max-width: 768px) {
+  .about-me-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px; /* Adjust padding for mobile */
+  }
+
+  .about-me-left {
+    padding-right: 0;
+    display: flex; /* Use flex for centering items */
+    flex-direction: column;
+    align-items: center; /* Center text and button */
+    order: 2; /* Text below image */
+    margin-top: 30px; /* Space above text block */
+  }
+
+  .about-me-right {
+    order: 1; /* Image above text */
+    width: 100%; /* Take full width */
+    justify-content: center; /* Center tilt container */
+    margin-top: 0; /* Remove top margin */
+  }
+
+  .about-me-photo {
+    width: 60%; /* Adjust size for mobile */
+    max-width: 250px; /* Limit max size on mobile */
+    margin: 0 auto; /* Center if needed (though flex should handle it) */
+  }
+
+  /* Adjust initial animation positions for mobile if needed */
+  .about-me-left.animate-on-scroll {
+    transform: translateY(30px); /* Slide up instead of left */
+  }
+
+  .about-me-right.animate-on-scroll {
+     /* Reset horizontal slide, maybe fade only or slide up */
+     transform: translateY(30px);
+  }
+
+  /* Visible state for mobile */
+  .animate-on-scroll.is-visible {
+     opacity: 1;
+     transform: translateY(0); /* Slide to original position */
+  }
+}

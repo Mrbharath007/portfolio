@@ -1,0 +1,494 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+:root {
+  /* Default color for the triangle background */
+  --main-color: #7b61ff;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.hero-section {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 90vh; /* or any preferred height */
+  overflow: hidden;
+}
+
+/* === Triangular Divs === */
+/**
+ * The boundary between left (flex:1) and right (flex:2) is ~33.3%.
+ * Placing the wrapper at left: 33.3% and translating -50% horizontally
+ * means half of the triangle is on the black side, half on the white side.
+ */
+.triangle-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 33.3%;
+  transform: translate(-50%, -50%);
+  width: 500px; /* Adjust as needed */
+  height: 500px;
+  z-index: 2; /* So it's above both sections */
+}
+
+/* We'll use an inline SVG mask to create a rounded triangle shape */
+.triangle-bg,
+.triangle-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M10,20 A10,10 0 0 1 20,10 H80 A10,10 0 0 1 90,20 L50,80 A10,10 0 0 1 40,80 Z' fill='white'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M10,20 A10,10 0 0 1 20,10 H80 A10,10 0 0 1 90,20 L50,80 A10,10 0 0 1 40,80 Z' fill='white'/></svg>");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Background triangle (color changes via var(--main-color)) */
+.triangle-bg {
+  background-color: var(--main-color);
+  z-index: 1;
+}
+
+/* Foreground triangle for the user image */
+.triangle-fg {
+  top: 20px;
+  left: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.triangle-fg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* === Left & Right Sections === */
+.left-section {
+  flex: 1;
+  background: rgba(5, 5, 12, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-3d-canvas-container {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particles-container {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.right-section {
+  flex: 2;
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Gear Icon & Color Swatches === */
+.settings-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-icon:hover {
+  transform: rotate(90deg) scale(1.1);
+  background: var(--main-color);
+  color: #fff;
+  box-shadow: 0 0 16px var(--main-color);
+}
+
+.color-options {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 14px 18px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.theme-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  font-weight: 600;
+}
+
+.swatch-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+/* === Floating Tech Badges === */
+.hero-floating-badges {
+  position: absolute;
+  top: 120px;
+  left: 260px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-badge {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  animation: floatBadge 4s ease-in-out infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-badge.badge-1 {
+  animation-delay: 0s;
+  border-color: var(--main-color);
+}
+
+.hero-badge.badge-2 {
+  animation-delay: 1.3s;
+}
+
+.hero-badge.badge-3 {
+  animation-delay: 2.6s;
+}
+
+@keyframes floatBadge {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* === Animated Text in the Right Section === */
+.right-content {
+  margin: 250px 0 0 250px; /* Adjust to position text as desired */
+}
+
+.iam-text {
+  margin-right: 80%;
+  font-size: 50px;
+  color: #999; /* Light grey */
+  margin-bottom: 20px;
+  text-shadow: none;
+}
+
+/* Container for static + dynamic text */
+.slider-text-container {
+  display: flex;
+  align-items: flex-end; /* Keep "I'M" aligned with the text lines */
+  gap: 10px;
+}
+
+/* "A" text in front of each line */
+.static-text {
+  color: #666;
+  font-size: 50px;
+  font-weight: 400;
+  text-shadow: none;
+}
+
+/* The vertical sliding list */
+.dynamic-text {
+  height: 60px;
+  line-height: 60px;
+  overflow: hidden;
+  position: relative;
+  margin-left: 25px;
+}
+
+.dynamic-text li {
+  list-style: none;
+  font-size: 50px;
+  font-weight: 600;
+  color: var(--main-color);
+  text-shadow: none;
+  position: relative;
+  top: 0;
+  animation: slideText 12s steps(4) infinite;
+  white-space: nowrap; /* ✅ Prevents word splitting */
+  text-align: left; /* ✅ Align text to left */
+  padding-left: 5px; /* ✅ Consistent left padding */
+}
+
+/* Blinking caret effect on white background */
+.dynamic-text li span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 115%;
+  background-color: #ffffff;
+  border-left: 2px solid var(--main-color);
+  box-shadow: none;
+  animation: typing 3s steps(10) infinite;
+}
+
+@keyframes slideText {
+  100% {
+    top: -240px; /* 4 lines * 60px each = 240 */
+  }
+}
+
+@keyframes typing {
+  40%,
+  60% {
+    left: calc(100% + 30px);
+  }
+  100% {
+    left: 0;
+  }
+}
+
+/* The container for the 2 buttons */
+.button-container {
+  margin-top: 50px;
+  display: flex;
+  gap: 30px; /* space between buttons */
+}
+
+/* "Get Started" button */
+.get-started-btn {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+  padding: 11px 26px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.get-started-btn:hover {
+  background-color: #000;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* "View Portfolio" button uses the dynamic color */
+.portfolio-btn {
+  border: 1px solid var(--main-color);
+  background-color: var(--main-color); /* updated via gear icon */
+  color: #fff;
+  padding: 11px 26px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.portfolio-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--main-color);
+  transform: translateY(-2px);
+}
+
+/* === FOLLOW ME ON / SOCIAL ICONS at bottom of right section === */
+.follow-me-container {
+  position: absolute;
+  bottom: 25px;
+  left: 65%; /* adjust as needed to match .right-content spacing */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.follow-text {
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+  margin: 0; /* same line as icons */
+  text-shadow: none;
+}
+
+.social-icons {
+  display: flex;
+  gap: 16px;
+}
+
+/* Each social link */
+.social-link {
+  font-size: 22px;
+  color: #555; /* default color */
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link:hover {
+  color: var(--main-color);
+  transform: translateY(-3px) scale(1.15);
+  filter: none;
+}
+
+/* 
+  =====================
+  MEDIA QUERY FOR MOBILE
+  =====================
+*/
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    height: auto; /* let content dictate height */
+  }
+
+  /* Hide floating badges on mobile */
+  .hero-floating-badges {
+    display: none !important;
+  }
+
+  /* Hide the triangle on mobile (as per your code) */
+  .triangle-wrapper {
+    display: none;
+  }
+
+  /* Stack left & right sections vertically */
+  .left-section,
+  .right-section {
+    width: 100%;
+    flex: none; 
+    position: static;
+    height: auto;
+  }
+
+  /* 
+    Place gear icon to the left: 
+    We'll remove absolute positioning and 
+    align it to the left with some margin 
+  */
+  .settings-icon {
+    position: static;
+    margin-left: 85%; /* top margin 10px, left margin 20px */
+    display: block;
+    text-align: left;
+  }
+  .settings-icon:hover {
+    transform: rotate(10deg);
+  }
+
+  .color-options {
+    position: static;
+    margin: 10px 20px; 
+  }
+
+  /* Center the dynamic text container */
+  .slider-text-container {
+    justify-content: center; /* horizontally center */
+  }
+
+  /* Adjust the right-content margin for mobile */
+  .right-content {
+    margin: 20px auto;
+    padding: 0 20px; /* some side padding */
+  }
+
+  /* Make text smaller on mobile */
+  .iam-text {
+    font-size: 32px;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .dynamic-text li {
+    font-size: 32px;
+  }
+
+  /* Buttons stack vertically */
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Move "Follow me" from absolute bottom to normal flow */
+  .follow-me-container {
+    position: static;
+    margin: 20px auto 40px;
+    justify-content: center;
+  }
+
+  .follow-text {
+    font-size: 16px;
+  }
+}

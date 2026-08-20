@@ -1,0 +1,333 @@
+/* Gaming Loader Screen Overlay */
+.game-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #080a12;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+  overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.game-loader-overlay.fade-out {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+/* Background Animated Grid */
+.game-loader-bg-grid {
+  position: absolute;
+  inset: -50%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg);
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
+}
+
+/* Scanlines Effect */
+.game-loader-scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.6;
+}
+
+/* Ambient Radial Glow */
+.game-loader-glow-orb {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-color, #7b61ff) 0%, transparent 70%);
+  opacity: 0.22;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: pulseOrb 3s infinite ease-in-out alternate;
+}
+
+@keyframes pulseOrb {
+  0% { transform: scale(0.9); opacity: 0.18; }
+  100% { transform: scale(1.2); opacity: 0.28; }
+}
+
+/* HUD Main Box Frame */
+.game-hud-frame {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 650px;
+  padding: 35px 40px;
+  background: rgba(13, 16, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(123, 97, 255, 0.15),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Decorative Corner Accents */
+.hud-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--glow-color, #7b61ff);
+  border-style: solid;
+  pointer-events: none;
+}
+.hud-corner.top-left { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-top-left-radius: 12px; }
+.hud-corner.top-right { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-top-right-radius: 12px; }
+.hud-corner.bottom-left { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-bottom-left-radius: 12px; }
+.hud-corner.bottom-right { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-bottom-right-radius: 12px; }
+
+/* HUD Header Info */
+.hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hud-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--glow-color, #7b61ff);
+  font-weight: 700;
+}
+
+.hud-icon.pulse {
+  animation: hudPulse 1.2s infinite ease-in-out alternate;
+}
+
+@keyframes hudPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 8px var(--glow-color, #7b61ff)); }
+}
+
+.hud-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hud-stats span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* HUD Center Reactor Core Graphic */
+.hud-center {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.hud-reactor-ring {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px dashed var(--glow-color, #7b61ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  animation: spinRing 8s linear infinite;
+  box-shadow: 0 0 20px rgba(123, 97, 255, 0.2);
+  flex-shrink: 0;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.reactor-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-color, #7b61ff), #0f111e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.reactor-icon {
+  font-size: 22px;
+  color: #ffffff;
+  animation: coreFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes coreFloat {
+  0% { transform: translateY(-2px) scale(0.95); }
+  100% { transform: translateY(2px) scale(1.05); }
+}
+
+.hud-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #ffffff, var(--glow-color, #7b61ff));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(123, 97, 255, 0.4);
+}
+
+.hud-subtitle {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
+
+/* Progress Section */
+.hud-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hud-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.hud-status-text {
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 1px;
+  font-size: 11px;
+}
+
+.hud-percentage {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--glow-color, #7b61ff);
+  text-shadow: 0 0 12px var(--glow-color, #7b61ff);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Progress Bar Track & Fill */
+.hud-progress-track {
+  position: relative;
+  height: 18px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.hud-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--glow-color, #7b61ff), #00f2fe);
+  border-radius: 999px;
+  position: relative;
+  transition: width 0.08s ease-out;
+  box-shadow: 0 0 15px var(--glow-color, #7b61ff);
+}
+
+.hud-progress-head-glow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #ffffff, 0 0 20px var(--glow-color, #7b61ff);
+}
+
+/* Segment Ticks Over Progress Bar */
+.hud-progress-ticks {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 6px;
+  pointer-events: none;
+  align-items: center;
+}
+
+.hud-progress-ticks .tick {
+  width: 2px;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.2s ease;
+}
+
+.hud-progress-ticks .tick.active {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Footer Instructions */
+.hud-footer {
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.35);
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+}
+
+@media (max-width: 600px) {
+  .game-hud-frame {
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .hud-stats {
+    display: none;
+  }
+  .hud-title {
+    font-size: 18px;
+  }
+  .hud-reactor-ring {
+    width: 50px;
+    height: 50px;
+  }
+  .reactor-icon {
+    font-size: 16px;
+  }
+}

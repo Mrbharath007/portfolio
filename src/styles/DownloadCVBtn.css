@@ -1,0 +1,150 @@
+.download-cv-btn-animated {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid var(--accent-color, #7b61ff);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 12px var(--accent-color, #7b61ff);
+  user-select: none;
+  text-decoration: none;
+  z-index: 1;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.download-cv-btn-animated:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.04);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 22px var(--accent-color, #7b61ff);
+}
+
+.download-cv-btn-animated:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Background progress fill */
+.cv-btn-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color, #7b61ff), #00f2fe);
+  transition: width 0.05s linear;
+  z-index: 0;
+  border-radius: 30px;
+}
+
+/* Shimmer Light Reflection Sweep on Hover */
+.download-cv-btn-animated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: none;
+  z-index: 2;
+}
+
+.download-cv-btn-animated:hover::before {
+  animation: cvShimmer 1.2s infinite;
+}
+
+@keyframes cvShimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.cv-btn-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.cv-icon {
+  font-size: 17px;
+  transition: transform 0.3s ease;
+}
+
+.arrow-bounce {
+  animation: arrowBounce 1.8s infinite ease-in-out;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+.spinner {
+  animation: cvSpin 0.9s linear infinite;
+}
+
+@keyframes cvSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.check-pop {
+  color: #2ecc71;
+  animation: checkPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  70% { transform: scale(1.3) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Completed State Glow */
+.download-cv-btn-animated.completed {
+  border-color: #2ecc71;
+  box-shadow: 0 0 25px #2ecc71, 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Sparkle Confetti Particles */
+.sparkle-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.sparkle-particles span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  animation: particleBurst 0.6s ease-out forwards;
+}
+
+.sparkle-particles .p1 { animation-delay: 0s; --x: -35px; --y: -25px; }
+.sparkle-particles .p2 { animation-delay: 0.04s; --x: 35px; --y: -20px; }
+.sparkle-particles .p3 { animation-delay: 0.08s; --x: -28px; --y: 28px; }
+.sparkle-particles .p4 { animation-delay: 0.06s; --x: 32px; --y: 22px; }
+.sparkle-particles .p5 { animation-delay: 0.02s; --x: 0px; --y: -35px; }
+.sparkle-particles .p6 { animation-delay: 0.07s; --x: 0px; --y: 35px; }
+
+@keyframes particleBurst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}

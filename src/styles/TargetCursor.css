@@ -1,0 +1,68 @@
+
+
+.target-cursor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 999999;
+  mix-blend-mode: difference;
+}
+
+.target-cursor-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.target-cursor-corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 2.5px solid #ffffff;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.corner-tl {
+  transform: translate(-130%, -130%);
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-tr {
+  transform: translate(30%, -130%);
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-br {
+  transform: translate(30%, 30%);
+  border-left: none;
+  border-top: none;
+}
+
+.corner-bl {
+  transform: translate(-130%, 30%);
+  border-right: none;
+  border-top: none;
+}
+
+/* Hide custom cursor on touch/mobile screens */
+@media (max-width: 768px), (pointer: coarse), (hover: none) {
+  .target-cursor-wrapper {
+    display: none !important;
+  }
+}
+

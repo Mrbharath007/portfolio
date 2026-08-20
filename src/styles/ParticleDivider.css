@@ -1,0 +1,169 @@
+/* ==========================================================================
+   ParticleDivider.css - Interactive Space-Themed Section Divider
+   ========================================================================== */
+
+.particle-divider-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  background: transparent;
+  z-index: 5;
+  touch-action: pan-y;
+  pointer-events: none;
+  transition: filter 0.3s ease;
+}
+
+/* Background gradient vignette to softly blend between dark sections */
+.particle-divider-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 15, 26, 0.4) 0%,
+    rgba(5, 5, 10, 0.8) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle-divider-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Central interactive cosmic glyph badge */
+.divider-center-badge {
+  position: relative;
+  z-index: 4;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 18px;
+  background: rgba(8, 8, 16, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--spotlight-color);
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: translateY(0);
+}
+
+.particle-divider-container:hover .divider-center-badge {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--main-color);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6), 0 0 25px var(--main-color);
+  background: rgba(12, 12, 24, 0.95);
+}
+
+/* Pulsing orbital ring around the celestial glyph */
+.divider-glyph-orbit {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider-orbit-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px dashed var(--main-color);
+  opacity: 0.7;
+  animation: rotateOrbit 10s linear infinite;
+  box-shadow: 0 0 8px var(--spotlight-color);
+}
+
+.particle-divider-container:hover .divider-orbit-ring {
+  animation-duration: 4s;
+  opacity: 1;
+  border-style: solid;
+}
+
+@keyframes rotateOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.divider-glyph-symbol {
+  font-size: 13px;
+  color: var(--main-color);
+  text-shadow: 0 0 10px var(--main-color), 0 0 20px #ffffff;
+  animation: pulseGlyph 2.5s ease-in-out infinite alternate;
+  line-height: 1;
+}
+
+@keyframes pulseGlyph {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.divider-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #e2e8f0;
+  white-space: nowrap;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.particle-divider-container:hover .divider-label {
+  color: #ffffff;
+  letter-spacing: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .particle-divider-container {
+    height: 70px !important;
+  }
+
+  .divider-center-badge {
+    padding: 4px 12px;
+    gap: 8px;
+  }
+
+  .divider-label {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+  }
+
+  .divider-glyph-orbit {
+    width: 18px;
+    height: 18px;
+  }
+
+  .divider-glyph-symbol {
+    font-size: 11px;
+  }
+}

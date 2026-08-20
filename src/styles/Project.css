@@ -1,0 +1,392 @@
+/* =================== Variables & Common Styles =================== */
+:root {
+  /* Define variables NOT controlled by App.js's mainColor state */
+  --cardBgColor: rgba(42, 44, 51, 0.6); /* Base card background */
+  --cardBgHoverColor: rgba(42, 44, 51, 0.8); /* Hover card background */
+  --textColor: #eee;
+  --subTextColor: #ccc;
+  /* --mainColor definition is removed from here - it's now globally set by App.js as --main-color */
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.project-page-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--textColor);
+  background-color: transparent; /* Galaxy background renders behind */
+  overflow: hidden; /* Prevent potential overflow issues */
+  padding-top: 60px; /* Space for potential navbar */
+  padding-bottom: 60px; /* Increased bottom padding */
+  z-index: 2;
+}
+
+/* Optional: subtle background pattern/gradient */
+/* .project-page-container:before {
+  content: "";
+  position: absolute;
+  left: -150%;
+  top: 0;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  transform: rotate(45deg);
+  z-index: 0;
+} */
+
+.main-project-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2.8rem;
+  font-weight: bold;
+  z-index: 1;
+  position: relative;
+  color: var(--main-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Controls */
+.project-controls {
+  max-width: 900px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+  position: relative;
+}
+
+.project-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.project-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #a0a0a0;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.project-tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.project-tab.active {
+  background: var(--main-color);
+  color: #000;
+  border-color: var(--main-color);
+  font-weight: 700;
+  box-shadow: 0 0 15px var(--main-color);
+}
+
+.project-search-input {
+  width: 90%;
+  max-width: 400px;
+  padding: 10px 18px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-search-input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 12px var(--main-color);
+}
+
+/* Image wrapper & Category badge */
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-category-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 8px 0 12px 0;
+}
+
+.project-tag {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.no-projects-message {
+  text-align: center;
+  color: var(--subTextColor);
+  margin-top: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+/* =================== Swiper Styles =================== */
+.swiper-container-wrapper {
+  width: 90%;
+  max-width: 1000px; /* Slightly wider max-width */
+  margin: 40px auto;
+  position: relative;
+  z-index: 1;
+}
+
+.mySwiper {
+  width: 100%;
+  padding-top: 50px; /* Keep padding for effects */
+  padding-bottom: 60px; /* Increased bottom padding for pagination */
+}
+
+.project-swiper-slide {
+  /* Card Base Styles */
+  background-position: center;
+  background-size: cover;
+  width: 320px; /* Slightly wider card */
+  min-height: 460px; /* Increased minimum height */
+  border-radius: 12px; /* Slightly more rounded corners */
+  overflow: hidden; /* Keep content contained */
+
+  /* Glassmorphism Effect */
+  background-color: var(--cardBgColor);
+  backdrop-filter: blur(10px); /* The blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 2px solid transparent; /* Start with transparent border */
+
+  /* Transitions for hover effects */
+  transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.3s ease;
+
+  /* Add perspective for coverflow depth */
+  transform: translateZ(0); /* Helps with rendering layers */
+}
+
+/* Hover Effects */
+.project-swiper-slide:hover {
+  /* Use the globally defined --main-color from App.js */
+  border-color: var(--main-color); /* << Border color on hover uses App's color */
+  background-color: var(--cardBgHoverColor); /* Slightly change bg on hover */
+  transform: scale(1.02) translateZ(10px); /* Slight scale up effect */
+}
+
+/* Make sure slide shadows from coverflow effect are visible */
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
+.swiper-slide-shadow-right {
+   background-image: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
+
+
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure content takes full height */
+  position: relative; /* Needed for potential absolute positioning inside */
+  z-index: 2; /* Ensure content is above background/shadows */
+}
+
+.project-image {
+  display: block;
+  width: 100%;
+  height: 250px; /* Increased image height */
+  object-fit: cover; /* Cover the area */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+}
+
+.project-info {
+  padding: 20px; /* Comfortable padding */
+  text-align: center;
+  flex-grow: 1; /* Allow this section to take remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push button to bottom */
+  color: var(--textColor);
+}
+
+.project-name {
+  font-size: 1.5em; /* Larger name */
+  margin-bottom: 8px;
+  font-weight: 600; /* Bolder name */
+  color: #ffffff; /* Brighter name */
+}
+
+.project-description {
+  font-size: 0.95em; /* Slightly larger description */
+  color: var(--subTextColor);
+  margin-bottom: 20px; /* Space before the button */
+  line-height: 1.4;
+  font-weight: 400; /* Regular weight */
+  min-height: 50px; /* Ensure some minimum space for description */
+}
+
+.project-link {
+  display: inline-flex; /* Use flex for icon + text alignment */
+  align-items: center; /* Vertically center icon and text */
+  justify-content: center; /* Center content in the button */
+  gap: 8px; /* Space between icon and text */
+  padding: 10px 18px; /* Slightly larger padding */
+  background-color: rgba(0, 0, 0, 0.3); /* Subtle background */
+  color: var(--textColor);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  margin-top: auto; /* Pushes button to bottom if needed */
+  align-self: center; /* Center button horizontally */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.project-link:hover {
+  /* Use the globally defined --main-color from App.js */
+  background-color: var(--main-color); /* << Use App's color for hover */
+  color: #1B1C21; /* Dark text on hover */
+  border-color: var(--main-color); /* << Use App's color for border */
+}
+
+.project-link svg { /* Style the react-icon */
+  font-size: 1.2em; /* Adjust icon size */
+}
+
+/* Customize Swiper Navigation Arrows */
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+  /* Use the globally defined --main-color from App.js */
+  color: var(--main-color); /* << Use App's color for arrows */
+  background-color: transparent; /* Remove background */
+  width: 44px; /* Ensure sufficient click area */
+  height: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s ease;
+}
+.mySwiper .swiper-button-next:hover,
+.mySwiper .swiper-button-prev:hover {
+    color: #ffffff; /* White on hover */
+}
+
+.mySwiper .swiper-button-next::after,
+.mySwiper .swiper-button-prev::after {
+  font-size: 24px; /* Adjust arrow symbol size */
+  font-weight: bold;
+  /* The color is inherited from the parent button now */
+}
+
+/* Customize Swiper Pagination Dots */
+.mySwiper .swiper-pagination-bullet {
+  background-color: #aaa;
+  opacity: 0.6;
+  width: 10px;
+  height: 10px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  /* Use the globally defined --main-color from App.js */
+  background-color: var(--main-color); /* << Use App's color for active bullet */
+  opacity: 1;
+}
+
+/* =================== Responsive Adjustments =================== */
+@media screen and (max-width: 768px) {
+  .main-project-title {
+    font-size: 2.4rem;
+  }
+  .project-swiper-slide {
+    width: 280px; /* Adjust card width */
+    min-height: 430px; /* Adjust height */
+  }
+  .project-name {
+    font-size: 1.3em;
+  }
+  .project-description {
+      font-size: 0.9em;
+  }
+   
+
+}
+
+@media screen and (max-width: 480px) {
+  .project-page-container {
+      padding-top: 40px;
+      padding-bottom: 40px;
+  }
+  .main-project-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  .swiper-container-wrapper {
+    width: 100%;
+    margin: 20px 0;
+  }
+  .mySwiper {
+    padding-top: 20px;
+    padding-bottom: 50px; /* Ensure space for pagination */
+  }
+  .project-swiper-slide {
+    width: 240px; /* Further reduce card width */
+    min-height: 400px; /* Adjust height */
+  }
+  .project-image {
+    height: 180px; /* Adjust image height */
+  }
+  .project-name {
+    font-size: 1.2em;
+  }
+  .project-description {
+      font-size: 0.85em;
+      min-height: 40px;
+  }
+  .project-link {
+    padding: 8px 14px;
+    font-size: 0.9em;
+  }
+  .project-link svg {
+      font-size: 1.1em;
+  }
+   /* Hide navigation arrows on very small screens */
+  .mySwiper .swiper-button-next,
+  .mySwiper .swiper-button-prev {
+      display: none;
+  }
+}
